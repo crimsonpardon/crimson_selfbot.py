@@ -156,7 +156,10 @@ def run_selfbot(token: str, afk_message: str):
                 print(R + f"  ✖ Could not send: {e}")
 
     try:
-        client.run(token, bot=False)       # bot=False → selfbot mode
+        try:
+            client.run(token, bot=False)   # newer discord.py-self
+        except TypeError:
+            client.run(token)              # older discord.py-self
     except discord.LoginFailure:
         print(R + BD + "\n  ✖ Invalid token! Please try again.\n")
         time.sleep(2)
